@@ -1,0 +1,32 @@
+
+body {
+    background-color: #fff124;
+}
+
+h5,
+p {
+    text-align: center;
+}
+
+.navbar {
+    background-color: #a8deff;
+}
+
+.card {
+    border: solid;
+    margin-top: 5em;
+}
+
+.btn {
+    color:  black;
+    font-weight: bold;
+    border: 3px solid #fff124;
+    border-radius: 10px;
+    background-color: #a8deff;
+}
+
+
+.navbar-brand img {
+    height: 4em;
+    width: 4.5em; 
+}
