@@ -3,7 +3,6 @@
 
 $(document).ready(function(){
 
-    $(".card-deck").hide ();
 
 
     $(function(){
@@ -14,7 +13,5 @@ $(document).ready(function(){
         });
      })
 
-    $(".btn-primary").click(function(){
-        $(".card-deck").toggle();
-    }); 
+
 });

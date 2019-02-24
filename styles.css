@@ -45,7 +45,7 @@ footer {
   }
   .card-deck .card {
     display: block;
-    flex-basis: 33.3%; /* change this value for each breakpoint*/
+    flex-basis: 33.3%; 
   }
 
 }
