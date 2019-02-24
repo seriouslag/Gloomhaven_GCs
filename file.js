@@ -3,8 +3,6 @@
 
 $(document).ready(function(){
 
-
-
     $(function(){
         $(".btn-primary").click(function () {
            $(this).text(function(i, text){
