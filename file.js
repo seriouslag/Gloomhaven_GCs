@@ -1,4 +1,5 @@
 var user = null;
+var database = firebase.database();
 
 $(document).ready(function () {
     $(function () {
@@ -71,4 +72,81 @@ function signOut() {
     // Signs the user out
     // https://firebase.google.com/docs/reference/js/firebase.auth.Auth?authuser=0#signOut
     firebase.auth().signOut();
+}
+
+var usersRef = firebase.database().ref('users/');
+usersRef.on('value', handleUsersUpdate);
+
+function handleUsersUpdate(snapshot) {
+    console.log('database snapshot', snapshot.val());
+    buildCharacterCards(snapshot.val());
+
+};
+
+function buildCharacterCards(users) {
+    $.each(users, function (id, user) {
+        $.each(user.characters, function (index, character) {
+            console.log(character);
+            buildCharacterCard(character);
+            buildCharacterModal(character);
+        })
+    });
+}
+
+function buildCharacterCard(character) {
+    var id = character.id;
+    var name = character.name;
+    var level = character.level;
+    var motto = character.motto;
+    var description = character.description;
+    var image = character.image;
+    var title = character.title;
+    var characterClass = character.class;
+
+    $("#party.card-deck").append(
+        '<div class="card">' +
+        '<img class="card-img-top" src="' + image + '" alt="' + title + '">' +
+        '<div class="card-body text-center">' +
+        '<h5>' + name + '</h5>' +
+        '<p class="card-text">' + characterClass + '</p>' +
+        '<a data-toggle="modal" href="#' + name + 'Modal" class="card-link">Learn about ' + name + '</a>' +
+        '</div>' +
+        '</div>');
+}
+
+function buildCharacterModal(character) {
+    var id = character.id;
+    var name = character.name;
+    var level = character.level;
+    var motto = character.motto;
+    var description = character.description;
+    var image = character.image;
+    var title = character.title;
+    var characterClass = character.class;
+
+    var modalString =
+        '<div class="modal fade" id="' + name + 'Modal" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">' +
+        '<div class="modal-dialog modal-dialog-centered" role="document">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<h5 class="modal-title">' + title + '</h5>' +
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+        '</button>' +
+        '</div>' +
+        '<div class="modal-body">';
+
+    $.each(description, function (index, value) {
+        modalString += '<div>' + value + '</div>';
+    });
+
+    modalString +=
+        '<div class="modal-footer">' +
+        '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+    $("body").append(modalString);
 }
