@@ -1,18 +1,31 @@
+// Inital user value state
 var user = null;
+// Gets a reference to our firebase realtime database instance
 var database = firebase.database();
 
 $(document).ready(function () {
-    $(function () {
-        $(".btn-primary").click(function () {
-            $(this).text(function (i, text) {
-                return text === "Hide the Party Members" ? "See the Party Members" : "Hide the Party Members";
-            })
-        });
-    })
+    $(".btn-primary").click(function () {
+        $(this).text(function (i, text) {
+            return text === "Hide the Party Members" ? "See the Party Members" : "Hide the Party Members";
+        })
+    });
 
     // Register event handler for the submit action of the login form
-    $("#loginForm").on('submit', handleLoginFormSubmit)
+    $("#loginForm").on('submit', handleLoginFormSubmit);
+
+    // Register event handler for the logout button
+    $("#logoutBtn").on('click', signOut);
 });
+
+function showLoggedOutUi() {
+    $("#loginBtn").removeClass("d-none");
+    $("#logoutBtn").addClass("d-none");
+}
+
+function showLoggedInUi() {
+    $("#loginBtn").addClass("d-none");
+    $("#logoutBtn").removeClass("d-none");
+}
 
 
 // This is an observable added by firebase
@@ -25,14 +38,16 @@ firebase.auth().onAuthStateChanged(function (user) {
     console.log('User value has changed!', user);
     if (user) {
         // User is signed in.
-        alert('You are logged in to ' + user.email + "!");
+        //alert('You are logged in to ' + user.email + "!");
 
         $('#loginModal').modal('hide')
 
-        /* TODO show logged in ui */
+        // show logged in ui // hide logged out ui
+        showLoggedInUi();
     } else {
         // No user is signed in.
-        /* TODO hided logged in ui / show logged out ui */
+        // hide logged in ui / show logged out ui
+        showLoggedOutUi();
     }
 });
 
@@ -74,26 +89,41 @@ function signOut() {
     firebase.auth().signOut();
 }
 
+// place is database we plan to attach a observer too
 var usersRef = firebase.database().ref('users/');
+
+// database observer, this will call the handleUserUpdate
+// when data is changed/first time it is bound
 usersRef.on('value', handleUsersUpdate);
 
 function handleUsersUpdate(snapshot) {
-    console.log('database snapshot', snapshot.val());
-    buildCharacterCards(snapshot.val());
+    // snapshot is the object that is returned from firebase
+    // calling the .val() method on the snapshot returns the 
+    // values from the database as a javascript object
+    var users = snapshot.val();
 
+    // pass the array of users to build the character cards function
+    buildCharacterCards(users);
 };
 
 function buildCharacterCards(users) {
+    // Empty out card container so if data is changed we are not
+    // creating the same cards/modals again
+    $("#party.card-deck").empty();
+    // iterate of the list of users
     $.each(users, function (id, user) {
+        // iterate of each character a user has
         $.each(user.characters, function (index, character) {
-            console.log(character);
+            // build the character card
             buildCharacterCard(character);
+            // build the character modal
             buildCharacterModal(character);
         })
     });
 }
 
 function buildCharacterCard(character) {
+    // Get the character props
     var id = character.id;
     var name = character.name;
     var level = character.level;
@@ -103,7 +133,8 @@ function buildCharacterCard(character) {
     var title = character.title;
     var characterClass = character.class;
 
-    $("#party.card-deck").append(
+    // Build the card string
+    var cardString =
         '<div class="card">' +
         '<img class="card-img-top" src="' + image + '" alt="' + title + '">' +
         '<div class="card-body text-center">' +
@@ -111,10 +142,14 @@ function buildCharacterCard(character) {
         '<p class="card-text">' + characterClass + '</p>' +
         '<a data-toggle="modal" href="#' + name + 'Modal" class="card-link">Learn about ' + name + '</a>' +
         '</div>' +
-        '</div>');
+        '</div>';
+
+    // Append the new card to the card deck container
+    $("#party.card-deck").append(cardString);
 }
 
 function buildCharacterModal(character) {
+    // Get the character props
     var id = character.id;
     var name = character.name;
     var level = character.level;
@@ -124,6 +159,7 @@ function buildCharacterModal(character) {
     var title = character.title;
     var characterClass = character.class;
 
+    // Build the modal string
     var modalString =
         '<div class="modal fade" id="' + name + 'Modal" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">' +
         '<div class="modal-dialog modal-dialog-centered" role="document">' +
@@ -136,10 +172,12 @@ function buildCharacterModal(character) {
         '</div>' +
         '<div class="modal-body">';
 
+    // Loop over each description and add it to the modal string
     $.each(description, function (index, value) {
-        modalString += '<div>' + value + '</div>';
+        modalString += '<p>' + value + '</p>';
     });
 
+    // Finish building the modal string
     modalString +=
         '<div class="modal-footer">' +
         '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
@@ -148,5 +186,10 @@ function buildCharacterModal(character) {
         '</div>' +
         '</div>';
 
-    $("body").append(modalString);
+    // Attach the modal string to the card deck;
+    // We attach it to the card deck because it is a convienent place
+    // to attach;
+    // When we generate new cards we first empty the card deck so all
+    // the modal gets emptied as well
+    $("#party.card-deck").append(modalString);
 }
