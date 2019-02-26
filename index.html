@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
@@ -17,9 +18,10 @@
 
     <!-- Add additional services that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-auth.js"></script>
-    <!--
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+    <!--
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js">
+    </script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-functions.js"></script>
     -->
@@ -34,7 +36,8 @@
             <span class="navbar-brand mb-0 h1">GC.com</span>
         </div>
         <!-- <form class="form-inline"> -->
-        <button data-toggle="modal" class="btn btn-outline-success my-2 my-sm-0" href="#loginModal" type="button">Login</button>
+        <button data-toggle="modal" class="btn btn-outline-success my-2 my-sm-0" id="loginBtn" href="#loginModal" type="button">Login</button>
+        <button class="btn btn-outline-success my-2 my-sm-0 d-none" id="logoutBtn" type="button">Logout</button>
         <!-- </form> -->
     </nav>
     <div class="container">
@@ -44,7 +47,7 @@
                 <h5 class="card-title">The Gloomhaven GC Party</h5>
                 <p class="card-text">Goals: Kill monsters, find treasure, make money, don't die</p>
                 <p class="card-text">Motto: "We're sooo close to the next level"</p>
-                <a href="#party" class="btn btn-primary" data-toggle="collapse" role="button">See the Party Members</a>
+                <a id="show-party" href="#party" class="btn btn-primary" data-toggle="collapse" role="button">See the Party Members</a>
             </div>
         </div>
 
@@ -52,24 +55,7 @@
 
     <div class="container">
         <div class="card-deck collapse" id="party">
-            <div class="card">
-                <img class="card-img-top" src="Images/Brute.JPG" alt="Zeren the Brute">
-                <div class="card-body text-center">
-                    <h5>Zeren</h5>
-                    <p class="card-text">The GC Brute</p>
-                    <a data-toggle="modal" href="#zerenModal" class="card-link">Learn about Zeren</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img class="card-img-top" src="Images/Mindthief.JPG" alt="Walnut the Mindthief">
-                <div class="card-body text-center">
-                    <h5>Walnut</h5>
-                    <p class="card-text">The GC Mindthief</p>
-                    <a data-toggle="modal" href="#walnutModal" class="card-link">Learn about Walnut</a>
-                </div>
-            </div>
-
+            <!--
             <div class="card">
                 <img class="card-img-top" src="Images/Scoundrel.JPG" alt="Shallon the Scoundrel">
                 <div class="card-body text-center">
@@ -87,7 +73,7 @@
                     <a data-toggle="modal" href="#lillithModal" class="card-link">Learn about Lillith</a>
                 </div>
             </div>
-
+            -->
         </div>
     </div>
 
@@ -120,61 +106,7 @@
             </div>
         </div>
     </div>
-
-
-    <div class="modal fade" id="zerenModal" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Zeren the Brute</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Consequuntur aliquid. Proident fugit anim, yet eius geigh cryp. Sequi amet sed. Illo eius so aut
-                        aspernatur, but si. Molestiae. Consequuntur natus but eu ad. Aliquam perspiciatis so dolores
-                        nostrum. Dolores veritatis dicta ab consequat. Quaerat ipsam perspiciatis, nihil odit ullamco.
-                        Quae nisi minim ipsam but eos voluptas. Aliqua. Veritatis aut. </p>
-                    <p>Sed error excepteur but nostrud. Id in, yet commodi amet iste. Eiusmod pariatur enim consequatur
-                        for id yet illo, and ratione. Quia duis duis yet quisquam ullamco. Ab. </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="walnutModal" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Walnut the Mindthief</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Cat ipsum dolor sit amet, eum quae minim so velitesse. Perspiciatis dolorem for exercitationem
-                        magni yet culpa commodo geigh cryp. Minim amet, but laboris dolore. Ex corporis quis unde odit
-                        nesciunt adipisci. Id magni yet voluptas but aliquip occaecat quasi. Dolor eius. Accusantium
-                        aliquid or velitesse, so voluptas. Doloremque aliquip, nostrum eos lorem or id. Laborum quasi
-                        but nihil adipisci. Labore nulla est. Natus eu aute fugit. Fugiat sed eaque for voluptate. </p>
-                    <p>Et natus and dolorem for molestiae, commodo laboris commodo. Consequat eaque qui, quo but nihil
-                        so velit dolor. Anim ex vitae and fugit and sint eiusmod aliquam. Unde nihil or inventore. Vel
-                        nihil nostrud. Voluptatem et consequat reprehenderit magna exercitation and proident. Tempora
-                        dolore cillum yet labore or proident but perspiciatis. Lorem quasi or sint and pariatur.
-                        Aliquip reprehenderit for esse for pariatur. Odit duis. Incididunt mollit, but ipsam so beatae,
-                        anim commodi. </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!--
     <div class="modal fade" id="shallonModal" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -235,38 +167,24 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Footer -->
+    <div class="footer-spacer"></div>
 
     <footer class="page-footer font-small fixed-bottom">
-        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <div class="footer-copyright text-center py-3">
+            © 2019 Copyright:
             <a href="#"> GC.com</a>
         </div>
-
     </footer>
     <!-- Footer -->
 
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyCrTQ1lP-zuy4qlPzGYY-CDMALbOJnU1Fg",
-            authDomain: "gloom-36e1b.firebaseapp.com",
-            databaseURL: "https://gloom-36e1b.firebaseio.com",
-            projectId: "gloom-36e1b",
-            storageBucket: "gloom-36e1b.appspot.com",
-            messagingSenderId: "667862872382"
-        };
-        firebase.initializeApp(config);
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" async integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" async integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="file.js"></script>
-
 </body>
-
 </html>
