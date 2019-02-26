@@ -3,15 +3,16 @@ let user = null;
 
 // Storing commonly used elements for reference
 const elements = {
+    // We use getElementById for Id because it is 65% faster in most browsers
     showParty: document.getElementById("show-party"),
     loginBtn: document.getElementById("loginBtn"),
     logoutBtn: document.getElementById("logoutBtn"),
     loginForm: document.getElementById("loginForm"),
     loginModal: document.getElementById("loginModal"),
-
+    partyDeck: document.getElementById("party"),
+    // Use querySelector for more advanced lookups for convenience
     emailInput: document.querySelector("#loginForm input[name=email]"),
-    passwordInput: document.querySelector("#loginForm input[name=password]"),
-    partyDeck: document.querySelector("#party.card-deck")
+    passwordInput: document.querySelector("#loginForm input[name=password]")
 };
 
 /*
@@ -150,7 +151,7 @@ function buildCharacterModal(character) {
         '<div class="modal-body">';
 
     // Loop over each description and add it to the modal string
-    description.forEach(function (index, value) {
+    description.forEach(function (value) {
         modalString += '<p>' + value + '</p>';
     });
 
