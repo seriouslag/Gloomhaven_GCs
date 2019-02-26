@@ -49,3 +49,11 @@ footer {
     }
 
 }
+
+/*
+    This is so that the fixed footer wont cover content
+    without giving a scroll bar
+*/
+.footer-spacer {
+    height: 5em;
+}
