@@ -299,5 +299,4 @@ function createApp() {
     
 }
 
-const app = createApp();
-app.init();
+createApp().init();
