@@ -3,14 +3,14 @@ let user = null;
 
 // Storing commonly used elements for reference
 const elements = {
-    // We use getElementById for Id because it is 65% faster in most browsers
+    // Use getElementById for elements with IDs because it is 65% faster in some browsers
     showParty: document.getElementById("show-party"),
     loginBtn: document.getElementById("loginBtn"),
     logoutBtn: document.getElementById("logoutBtn"),
     loginForm: document.getElementById("loginForm"),
     loginModal: document.getElementById("loginModal"),
     partyDeck: document.getElementById("party"),
-    // Use querySelector for more advanced lookups for convenience
+    // Use querySelector on more advanced lookups for convenience
     emailInput: document.querySelector("#loginForm input[name=email]"),
     passwordInput: document.querySelector("#loginForm input[name=password]")
 };
@@ -85,9 +85,9 @@ function buildCharacterCards(users) {
     // Empty out card container so if data is changed we are not
     // creating the same cards/modals again
     elements.partyDeck.innerHTML = "";
-    // iterate of the list of users
+    // iterate over the list of users
     users.forEach(function (user) {
-        // iterate of each character a user has
+        // iterate over each character a user has
         user.characters.forEach(function (character) {
             // build the character card
             buildCharacterCard(character);
@@ -120,8 +120,7 @@ function buildCharacterCard(character) {
         '</div>';
 
     // Append the new card to the card deck container
-    const nodes = getDomNodesFromString(cardString);
-    appendChildrenNodes(elements.partyDeck, nodes);
+    appendToElement(elements.partyDeck, cardString);
 }
 
 function buildCharacterModal(character) {
@@ -148,7 +147,7 @@ function buildCharacterModal(character) {
         '</div>' +
         '<div class="modal-body">';
 
-    // Loop over each description and add it to the modal string
+    // iterate over the descriptions and add it to the modal string
     description.forEach(function (value) {
         modalString += '<p>' + value + '</p>';
     });
@@ -166,14 +165,18 @@ function buildCharacterModal(character) {
     // We attach it to the card deck because it is a convienent place
     // to attach;
     // When we generate new cards we first empty the card deck so all
-    // the modal gets emptied as well
-    const nodes = getDomNodesFromString(modalString);
-    appendChildrenNodes(elements.partyDeck, nodes);
+    // the modals gets emptied as well
+    appendToElement(elements.partyDeck, modalString);
 }
 
 /*
     Helper functions
 */
+
+function appendToElement(element, str) {
+    const nodes = getDomNodesFromString(str);
+    appendChildrenNodes(element, nodes);
+}
 
 function getDomNodesFromString(str) {
     const nodes = new DOMParser().parseFromString(str, 'text/html');
