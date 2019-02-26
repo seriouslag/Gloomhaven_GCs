@@ -120,8 +120,6 @@ function buildCharacterCard(character) {
         '</div>';
 
     // Append the new card to the card deck container
-    //$("#party.card-deck").append(cardString);
-
     const nodes = getDomNodesFromString(cardString);
     appendChildrenNodes(elements.partyDeck, nodes);
 }
