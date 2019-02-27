@@ -7,6 +7,12 @@ function createApp() {
         init () {
             this.firebaseInit();
             this.registerEventListeners();
+
+            return this;
+        },
+
+        destroy () {
+            this.unregisterEventListeners();
         },
 
         // Storing commonly used elements for reference
@@ -26,13 +32,22 @@ function createApp() {
             Register event handlers
         */
         registerEventListeners () {
-            this.elements.showParty.addEventListener("click", (event) => this.handleShowPartyClick(event));
+            this.elements.showParty.addEventListener("click", this.handleShowPartyClick);
 
             // Register event handler for the submit action of the login form
-            this.elements.loginForm.addEventListener("submit", (event) => this.handleLoginFormSubmit(event));
+            this.elements.loginForm.addEventListener("submit", this.handleLoginFormSubmit);
 
             // Register event handler for the logout button
-            this.elements.logoutBtn.addEventListener("click", (event) => this.signOut(event));
+            this.elements.logoutBtn.addEventListener("click", this.signOut);
+        },
+        unregisterEventListeners () {
+            this.elements.showParty.removeEventListener("click", this.handleShowPartyClick);
+
+            // Register event handler for the submit action of the login form
+            this.elements.loginForm.removeEventListener("submit", this.handleLoginFormSubmit);
+
+            // Register event handler for the logout button
+            this.elements.logoutBtn.removeEventListener("click", this.signOut);
         },
         /*
             End Registering event handlers
@@ -299,4 +314,4 @@ function createApp() {
     
 }
 
-createApp().init();
+const app = createApp().init();
